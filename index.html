@@ -5,7 +5,11 @@
 <meta name="theme-color" content="#15110d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="description" content="Moreland Games: original arcade games for every age. Play Unlikely Flyers as a turkey, a flying pig, a penguin, or a bull, or outrun the farmer in Farm House Run.">
 <title>Moreland Games</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c0302b'/%3E%3Crect x='2' y='2' width='28' height='28' rx='7' fill='none' stroke='%23f2c25a' stroke-width='2'/%3E%3Ctext x='16' y='23' font-family='Georgia' font-weight='700' font-size='19' text-anchor='middle' fill='%23fff4dc'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json"><link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png"><link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="application-name" content="Moreland Games"><meta name="apple-mobile-web-app-title" content="Moreland Games">
+<meta name="msapplication-TileColor" content="#15110d"><meta name="msapplication-TileImage" content="icons/icon-144.png">
+
+
 <style>:root{--ink:#15110d;--ink2:#211a13;--cream:#fbf4e6;--muted:#cdbfa8;--gold:#f2b544;--gold2:#c98a1c;--red:#d63c36;--line:rgba(255,240,210,.14);
  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
  --sat:env(safe-area-inset-top,0px);--sar:env(safe-area-inset-right,0px);--sab:env(safe-area-inset-bottom,0px);--sal:env(safe-area-inset-left,0px)}
@@ -1490,7 +1494,7 @@ function hubHTML(){return `
   <div class="wrap band-copy"><div><p class="num">Game 02</p><h3>Farm House Run</h3><p class="lead">Someone left the gate open.</p></div>
   <div><p>Choose a Pig, Bull, Chicken, or Goat and make for the county line down a three-lane farm road, with the farmer and his lasso not far enough behind. Clear the crates, bales, troughs, and tractors, collect what the farm drops, and keep your three hearts. Each animal has one trick.</p>
   <ul class="facts"><li>Swipe, arrows, or WASD</li><li>Four heroes, four abilities</li><li>10 levels</li><li>Endless, best saved</li></ul><a class="btn primary" href="#/farm-house-run">Play now</a></div></div></section>
- <footer class="foot"><div class="wrap"><span>Moreland Games</span><span>Original games for players of every age.</span></div></footer>
+ <footer class="foot"><div class="wrap"><span>Moreland Games</span><span>Original games for players of every age.</span><a href="privacy.html" style="color:inherit">Privacy</a></div></footer>
 </div>`;}
 function gameHTML(){return `
 <div class="uf" id="uf">
@@ -1541,4 +1545,5 @@ document.addEventListener('touchmove',e=>{if(ROUTE!=='hub'&&!(e.target.closest&&
 window.addEventListener('hashchange',go);loadAssets().then(()=>{document.documentElement.classList.add('ready');go();raf=requestAnimationFrame(frameLoop);});
 window.__mg={UF,UI,PHYS,go,FHR};
 
-</script></body></html>
+</script><script>if("serviceWorker" in navigator&&location.protocol!=="file:"){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
+</body></html>
