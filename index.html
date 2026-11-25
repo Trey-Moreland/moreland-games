@@ -238,6 +238,8 @@ a{color:inherit}
 .fhr .hud::before{content:"";position:absolute;left:0;right:0;top:0;height:clamp(120px,22vh,190px);background:linear-gradient(180deg,rgba(14,9,4,.5),rgba(14,9,4,0));pointer-events:none;opacity:0;transition:opacity .4s}
 .fhr.playing .hud::before{opacity:1}
 .fhr-stg,.fhr-dist,.fhr-snk span{color:#d3c6ab}
+
+.fhr #fhr-over-t{font-size:clamp(1.35rem,4.4vw,2.1rem);max-width:16em;margin-left:auto;margin-right:auto}
 </style></head>
 <body><div id="app"></div>
 <script>
@@ -678,9 +680,9 @@ function eyeS(g,x,y,r,lid){fEl(g,x,y,r,r*0.85,'#1b1511');fEl(g,x-r*0.3,y-r*0.3,r
 
 const HERO_FHR={
  pig:{name:'Pig',ability:'Mud Slide',passive:'Appetite: every snack is worth half again as much.',active:'Two seconds of unapologetic sliding. Obstacles become suggestions, and snacks are drawn in from all three lanes.',cd:14,dur:2.0,blurb:'Low centre of gravity'},
- bull:{name:'Bull',ability:'Stampede',passive:'Thick skin: crates and fences are a short delay, not an obstacle.',active:'Two seconds of straight-line conviction. Everything in the way becomes kindling, tractors included.',cd:15,dur:2.0,blurb:'Straight lines only'},
- chicken:{name:'Chicken',ability:'Flap Flight',passive:'Second wind: jump again in midair.',active:'Two and a half seconds of what the ornithologists call "technically flight". Clears everything.',cd:13,dur:2.4,blurb:'Technically airborne'},
- goat:{name:'Goat',ability:'Mighty Leap',passive:'Sure-footed: jumps higher, and steps up onto crates, bales and troughs.',active:'One enormous, unreasonable jump. Clears anything on the road.',cd:9,dur:1.3,blurb:'Climbs first'}};
+ bull:{name:'Bull',ability:'Stampede',passive:'Thick skin: crates and fences are a short delay, not an obstacle.',active:'Two seconds of straight-line conviction. Everything in the way gets smashed, tractors included.',cd:15,dur:2.0,blurb:'Straight lines only'},
+ chicken:{name:'Chicken',ability:'Flap Flight',passive:'Second wind: jump again in midair.',active:'Two and a half seconds of what bird experts call "technically flight". Clears everything.',cd:13,dur:2.4,blurb:'Technically airborne'},
+ goat:{name:'Goat',ability:'Mighty Leap',passive:'Sure-footed: jumps higher, and steps up onto crates, bales and troughs.',active:'One huge jump that clears anything on the road.',cd:9,dur:1.3,blurb:'Climbs first'}};
 const FHR_IDS=['pig','bull','chicken','goat'];
 const PIG={b:'#d8a595',s:'#a4766c',d:'#7b504b',hoof:'#2f2422',ear:'#bd8478',snout:'#c98e86'};
 const BUL={b:'#6e4d3a',s:'#46301f',l:'#8d6a50',horn:'#ddd0b0',hornT:'#8a7858',hoof:'#1f1712',muz:'#a9876a'};
@@ -1153,7 +1155,7 @@ function fhrHTML(){const pf=matchMedia('(pointer:fine)').matches;return `
   <div class="fhr-hint" id="fhr-hint"></div>
   <div class="fhr-banner" id="fhr-banner"><p class="num" id="fhr-ban-n"></p><h2 id="fhr-ban-t"></h2><p class="tg" id="fhr-ban-g"></p></div>
   <div class="fhr-toast" id="fhr-toast"></div>
-  <div class="panel fhr-panel" id="fhr-menu" role="dialog" aria-label="Choose your runaway"><p class="num">Game 02</p><h2 class="title">Farm House Run</h2><p class="sub">Someone left the gate open. The farmer has noticed. Choose who goes.</p>
+  <div class="panel fhr-panel" id="fhr-menu" role="dialog" aria-label="Choose your runaway"><p class="num">Game 02</p><h2 class="title">Farm House Run</h2><p class="sub">Someone left the gate open. The farmer noticed. Choose who goes.</p>
    <div class="seg" id="fhr-seg" role="tablist"><button type="button" role="tab" data-mode="campaign">Campaign</button><button type="button" role="tab" data-mode="endless">Endless</button></div>
    <div class="tiles" id="fhr-tiles"></div>
    <div class="fhr-abinfo" id="fhr-abinfo"></div>
@@ -1161,7 +1163,7 @@ function fhrHTML(){const pf=matchMedia('(pointer:fine)').matches;return `
    <button class="btn primary wide" id="fhr-start" type="button">Start running</button><p class="meta" id="fhr-meta"></p></div>
   <div class="panel fhr-panel small" id="fhr-pausep" role="dialog" aria-label="Paused"><p class="num">Paused</p><h2 class="title">A moment's peace</h2><p class="sub">He's catching his breath as well.</p><div class="row"><button class="btn primary" id="fhr-resume" type="button">Resume</button><button class="btn ghost" id="fhr-quit" type="button">Menu</button></div></div>
   <div class="panel fhr-panel" id="fhr-clear" role="dialog" aria-label="Stage clear"><p class="num" id="fhr-clr-n"></p><h2 class="title" id="fhr-clr-t"></h2><p class="sub" id="fhr-clr-s"></p><div class="stats"><div><span>Score</span><strong id="fhr-clr-sc">0</strong></div><div><span>Snacks</span><strong id="fhr-clr-sn">0</strong></div></div><p class="fhr-note" id="fhr-clr-h"></p><div class="row"><button class="btn primary" id="fhr-next" type="button">Next stage</button><button class="btn ghost" id="fhr-clr-menu" type="button">Menu</button></div></div>
-  <div class="panel fhr-panel" id="fhr-over" role="dialog" aria-label="Caught"><p class="num" id="fhr-over-n">Caught</p><h2 class="title">Caught.</h2><div class="fhr-caught"><canvas id="fhr-farmer"></canvas><blockquote id="fhr-quote"></blockquote></div>
+  <div class="panel fhr-panel" id="fhr-over" role="dialog" aria-label="Caught"><p class="num" id="fhr-over-n">Caught</p><h2 class="title" id="fhr-over-t">Caught.</h2><div class="fhr-caught"><canvas id="fhr-farmer"></canvas><blockquote id="fhr-quote"></blockquote></div>
    <div class="stats"><div><span>Score</span><strong id="fhr-final">0</strong></div><div><span id="fhr-best-l">Best</span><strong id="fhr-best">0</strong></div></div><p class="fhr-note" id="fhr-over-s"></p><p class="newbest" id="fhr-newbest">New best</p>
    <div class="row"><button class="btn primary" id="fhr-again" type="button">Run again</button><button class="btn ghost" id="fhr-change" type="button">Change hero</button></div><div class="swap" id="fhr-swap"><div class="tiles mini" id="fhr-tiles2"></div></div><button class="fhr-link" id="fhr-over-menu" type="button">Back to menu</button></div>
   <div class="panel fhr-panel" id="fhr-win" role="dialog" aria-label="Campaign complete"><p class="num">Campaign complete</p><h2 class="title">Over the county line</h2><p class="sub">Free range, finally. The farmer stands at the fence with his hat in his hands, which is as close to applause as he gets.</p><div class="stats"><div><span>Final score</span><strong id="fhr-win-sc">0</strong></div><div><span>Campaign best</span><strong id="fhr-win-b">0</strong></div></div><p class="newbest" id="fhr-win-nb">New best</p><div class="row"><button class="btn primary" id="fhr-win-end" type="button">Try Endless</button><button class="btn ghost" id="fhr-win-menu" type="button">Menu</button></div></div>
@@ -1246,7 +1248,7 @@ const FHR={st:'menu',mode:sget(FK.mode)==='endless'?'endless':'campaign',hero:FH
   this.show(null);this.hud();this.banner();FSnd.call(this.hero);setTimeout(()=>FSnd.whistle(),350);this.say(LINES.start,1.4);
   if(!this.hintShown){this.hintShown=true;const H=HERO_FHR[this.hero];const touch=matchMedia('(pointer:coarse)').matches;$('#fhr-hint').innerHTML=touch?`Swipe to change lane <i>·</i> swipe up to jump <i>·</i> swipe down for <b>${H.ability}</b>`:`Arrows or A / D to change lane <i>·</i> Space to jump <i>·</i> E for <b>${H.ability}</b>`;$('#fhr-hint').classList.add('show');clearTimeout(this._ht);this._ht=setTimeout(()=>$('#fhr-hint').classList.remove('show'),5200);}
   const s=$('#fhr-stage');s&&s.focus({preventScroll:true});},
- again(){Sound.ensure();Sound.click();if(this.mode==='campaign'){this.score=this.stScore0;this.pts=this.stPts0||0;this._cont=true;}else{this.score=0;this.pts=0;this.snacks=0;}this.start();},
+ again(){Sound.ensure();Sound.click();if(this.mode==='campaign'){this.stage=0;this.score=0;this.pts=0;this.snacks=0;this._cont=false;}else{this.score=0;this.pts=0;this.snacks=0;}this.start();},
  banner(){const b=$('#fhr-banner');if(this.mode==='campaign'){const S=this.stageDef();$('#fhr-ban-n').textContent=`Stage ${this.stage+1} of 10`;$('#fhr-ban-t').textContent=S.name;$('#fhr-ban-g').textContent=S.tag;}else{$('#fhr-ban-n').textContent='Endless';$('#fhr-ban-t').textContent='No finish line';$('#fhr-ban-g').textContent=this.best?`Distance is the only argument. Best so far: ${this.best}.`:'Distance is the only argument.';}
   b.classList.remove('show');void b.offsetWidth;b.classList.add('show');clearTimeout(this._bt);this._bt=setTimeout(()=>b.classList.remove('show'),2600);},
  pause(){if(this.st!=='play')return;this.st='paused';this.show('#fhr-pausep');$('#fhr-resume').focus({preventScroll:true});},
@@ -1353,12 +1355,11 @@ const FHR={st:'menu',mode:sget(FK.mode)==='endless'?'endless':'campaign',hero:FH
   $('#fhr-clr-sc').textContent=this.score;$('#fhr-clr-sn').textContent=this.stSnacks;$('#fhr-clr-h').textContent=healed?'A heart restored for the road.':'Unscathed. Quietly insufferable.';this.show('#fhr-clear');$('#fhr-next').focus({preventScroll:true});},
  next(){Sound.click();const keep=Math.min(3,this.hearts+1);this.stage=Math.min(9,this.stage+1);this._cont=true;this.start();this.hearts=keep;this.hud(true);},
  win(){this.st='win';const s=this.score;const nb=s>this.cbest;if(nb){this.cbest=s;sset(FK.cbest,String(s));}$('#fhr-win-sc').textContent=s;$('#fhr-win-b').textContent=this.cbest;$('#fhr-win-nb').classList.toggle('show',nb);if(nb)Sound.best();this.show('#fhr-win');},
- over(){this.st='over';const s=this.score;let best,nb=false;if(this.mode==='endless'){if(s>this.best){this.best=s;sset(FK.best,String(s));nb=true;}best=this.best;$('#fhr-best-l').textContent='Endless best';$('#fhr-over-n').textContent='Endless';}
-  else{if(s>this.cbest){this.cbest=s;sset(FK.cbest,String(s));nb=true;}best=this.cbest;$('#fhr-best-l').textContent='Campaign best';$('#fhr-over-n').textContent=`Stage ${this.stage+1} · ${this.stageDef().name}`;}
+ over(){this.st='over';const s=this.score;let best,nb=false;if(this.mode==='endless'){if(s>this.best){this.best=s;sset(FK.best,String(s));nb=true;}best=this.best;$('#fhr-best-l').textContent='Endless best';$('#fhr-over-n').textContent='Endless';$('#fhr-over-t').textContent='Caught.';$('#fhr-again').textContent='Run again';}
+  else{if(s>this.cbest){this.cbest=s;sset(FK.cbest,String(s));nb=true;}best=this.cbest;$('#fhr-best-l').textContent='Campaign best';this.unl=1;this.stage=0;sset(FK.unl,'1');$('#fhr-over-n').textContent='Caught';$('#fhr-over-t').textContent='The farmer caught you. Back to Level 1.';$('#fhr-again').textContent='Start at Level 1';}
   $('#fhr-final').textContent=s;$('#fhr-best').textContent=best;$('#fhr-newbest').classList.toggle('show',nb);if(nb)setTimeout(()=>Sound.best(),300);
   $('#fhr-over-s').textContent=`${Math.floor(this.dist)} m covered · ${this.mode==='campaign'?this.stSnacks:this.snacks} snacks collected`;
   const q=LINES.caught[(Math.random()*LINES.caught.length)|0].replace('{h}',HERO_FHR[this.hero].name.toLowerCase());$('#fhr-quote').textContent=q;
-  $('#fhr-again').textContent=this.mode==='campaign'?'Retry stage':'Run again';
   $('#fhr-swap').classList.remove('open');this.tiles('#fhr-tiles2',true);this.drawFarmerPortrait();this.show('#fhr-over');$('#fhr-again').focus({preventScroll:true});},
  drawFarmerPortrait(){const c=$('#fhr-farmer');const r=c.getBoundingClientRect();const dpr=Math.min(2.5,window.devicePixelRatio||1);c.width=Math.max(2,Math.round(r.width*dpr));c.height=Math.max(2,Math.round(r.height*dpr));const g=c.getContext('2d');const k=c.height/150;g.setTransform(k,0,0,k,c.width/2,c.height*1.55);farmerFront(g,{run:0});},
  // ---------- HUD ----------
@@ -1487,8 +1488,8 @@ function hubHTML(){return `
    <ul class="facts"><li>Tap, click, or Space</li><li>Personal best saved</li><li>Prize ribbons at 10, 20, 40, 80</li></ul><a class="btn primary" href="#/unlikely-flyers">Play now</a></div></article></div></section>
  <section class="soon-band live" id="farm-band" aria-label="Farm House Run, now playing"><a class="band-art" href="#/farm-house-run" aria-label="Play Farm House Run"><img id="farm-img" alt="A pig, a bull, a chicken and a goat running down a dirt farm road at golden hour, a weathered farmer with a lasso close behind and a barn on the horizon"><div class="band-scrim"></div><span class="pill live">Now playing</span></a>
   <div class="wrap band-copy"><div><p class="num">Game 02</p><h3>Farm House Run</h3><p class="lead">Someone left the gate open.</p></div>
-  <div><p>Choose a Pig, Bull, Chicken, or Goat and make for the county line down a three-lane farm road, with the farmer and his lasso not far enough behind. Clear the crates, bales, troughs, and tractors, collect what the farm drops, and keep your three hearts. Each animal has one trick and a distinct opinion of being hit.</p>
-  <ul class="facts"><li>Swipe, arrows, or WASD</li><li>Four heroes, four abilities</li><li>10-stage campaign</li><li>Endless, best saved</li></ul><a class="btn primary" href="#/farm-house-run">Play now</a></div></div></section>
+  <div><p>Choose a Pig, Bull, Chicken, or Goat and make for the county line down a three-lane farm road, with the farmer and his lasso not far enough behind. Clear the crates, bales, troughs, and tractors, collect what the farm drops, and keep your three hearts. Each animal has one trick.</p>
+  <ul class="facts"><li>Swipe, arrows, or WASD</li><li>Four heroes, four abilities</li><li>10 levels</li><li>Endless, best saved</li></ul><a class="btn primary" href="#/farm-house-run">Play now</a></div></div></section>
  <footer class="foot"><div class="wrap"><span>Moreland Games</span><span>Original games for players of every age.</span></div></footer>
 </div>`;}
 function gameHTML(){return `
